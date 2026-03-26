@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS books (
     author VARCHAR(100) NOT NULL,
     published_year INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);git 
+)
