@@ -1,109 +1,164 @@
-# 📚 Book Management REST API (Dockerized)
+# BE Submission REST API (Dockerized)
 
-Sebuah RESTful API sederhana untuk manajemen data buku (CRUD). Proyek ini dibangun menggunakan **Node.js, Express, dan MySQL**, serta di- *containerize* sepenuhnya menggunakan **Docker** untuk memudahkan proses instalasi dan *deployment* di lingkungan manapun.
+<div align="center">
 
-## 🚀 Teknologi yang Digunakan
-* **Backend:** Node.js, Express.js
-* **Database:** MySQL 8.0
-* **Infrastruktur:** Docker & Docker Compose
-* **Environment:** dotenv
+![Node.js](https://img.shields.io/badge/Node.js-18-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+RESTful API yang tangguh dan ter-containerize sepenuhnya untuk operasi CRUD data buku.  
+Dibangun dengan **Node.js**, **Express**, dan **MySQL**, proyek ini menggunakan **Docker Compose** untuk setup lingkungan yang terisolasi dan bebas masalah dependensi lokal.
+
+</div>
+
+---
+
+## ✨ Fitur Utama
+
+- ✅ **Operasi CRUD Lengkap** — Tambah, Baca, Perbarui, dan Hapus data buku
+- 🐳 **Infrastruktur Docker** — Setup *zero-config* untuk database dan aplikasi backend
+- 🗄️ **Relational Database** — Manajemen data terstruktur menggunakan MySQL 8.0
+- 🔒 **Keamanan Konfigurasi** — Menggunakan variabel lingkungan melalui file `.env`
 
 ---
 
 ## ⚙️ Persyaratan Sistem
-Sebelum menjalankan aplikasi ini, pastikan komputer Anda sudah terinstal:
-* [Git](https://git-scm.com/)
-* [Docker Desktop](https://www.docker.com/products/docker-desktop) (Pastikan Docker Engine sudah dalam keadaan *Running*)
-* [Postman](https://www.postman.com/) atau Insomnia (Untuk pengujian API)
+
+Pastikan perangkat lunak berikut sudah terinstal sebelum memulai:
+
+| Perangkat Lunak | Keterangan |
+|---|---|
+| [Git](https://git-scm.com/) | Version control |
+| [Docker Desktop](https://www.docker.com/products/docker-desktop) | Pastikan Docker Engine berstatus *Running* |
+| [Postman](https://www.postman.com/) / Insomnia | Untuk pengujian endpoint API |
 
 ---
 
-## 🛠️ Cara Instalasi & Menjalankan Aplikasi
-
-Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi secara lokal di komputer Anda:
+##  Cara Instalasi & Menjalankan Aplikasi
 
 ### 1. Clone Repository
-Buka terminal Anda dan jalankan perintah berikut untuk mengunduh *source code*:
+
 ```bash
-git clone [https://github.com/RahmatHedo/nama-repo-kamu.git](https://github.com/RahmatHedo/nama-repo-kamu.git)
-cd nama-repo-kamu
-(Catatan: Ubah nama-repo-kamu dengan nama repositori GitHub Anda yang sebenarnya).
+git clone https://github.com/RahmatHedo/SUBMISSIONBE.git
+```
 
-2. Konfigurasi Environment Variables
-Aplikasi ini membutuhkan variabel lingkungan (environment variables) untuk berjalan.
+### 2. Setup Environment
 
-Duplikat file .env.example yang ada di root directory.
+Duplikat file template dan ubah namanya menjadi `.env`:
 
-Ubah nama file hasil duplikat tersebut menjadi .env.
+```bash
+cp .env.example .env
+```
 
-Secara default, konfigurasi di dalamnya sudah disesuaikan untuk berjalan di dalam Docker, jadi Anda tidak perlu mengubah nilainya untuk pengetesan lokal.
+> ⚠️ **Penting:** Sebelum menjalankan aplikasi, buka file `.env` dan **isi semua nilai variabel** yang dibutuhkan terlebih dahulu.
 
-3. Build dan Jalankan Container (Docker)
-Pastikan tidak ada aplikasi lokal yang menggunakan Port 3000 (Node.js) dan Port 3306 (MySQL). Setelah itu, jalankan perintah sakti ini di terminal:
+Berikut contoh isi file `.env` yang perlu disesuaikan:
 
-Bash
+```env
+# Konfigurasi Database
+DB_HOST=db
+DB_PORT=3306
+DB_NAME=book_db
+DB_USER=root
+DB_PASSWORD=isi_password_kamu_di_sini
+
+# Konfigurasi Aplikasi
+APP_PORT=3000
+```
+
+### 3. Build & Jalankan Container
+
+Nyalakan database dan aplikasi Node.js hanya dengan satu perintah:
+
+```bash
 docker-compose up -d --build
-Tunggu beberapa saat hingga proses pull image dan build selesai. Docker akan menyalakan dua container: mysql_db dan api_backend.
+```
 
-4. Verifikasi Status Container
-Pastikan kedua container berjalan dengan normal (Status: Up):
+### 4. Verifikasi Container
 
-Bash
+Pastikan container `api_backend` dan `mysql_db` berjalan normal (Status: `Up`):
+
+```bash
 docker ps
-Untuk memastikan aplikasi Node.js sudah berhasil terhubung ke database MySQL, cek log aplikasi dengan perintah:
+```
 
-Bash
+Cek log backend untuk memastikan koneksi ke MySQL berhasil:
+
+```bash
 docker logs api_backend
-Jika muncul pesan ✅ Terhubung ke database MySQL lokal!, aplikasi sudah siap digunakan!
-
-🧪 Pengujian API (API Endpoints)
-Aplikasi berjalan pada http://localhost:3000. Berikut adalah contoh pengujian untuk menambahkan data buku baru menggunakan Postman.
-
-1. Create Book (POST)
-
-URL: http://localhost:3000/api/books
-
-Method: POST
-
-Headers: Content-Type: application/json
-
-Body (raw JSON):
-
-JSON
-{
-    "title": "Mahir Docker dalam 1 Hari",
-    "author": "Rahmat Hedo",
-    "published_year": 2026
-}
-Expected Response (201 Created):
-
-JSON
-{
-    "message": "Buku berhasil ditambahkan",
-    "id": 1
-}
-🗄️ Akses Database (Opsional)
-Jika Anda ingin melihat data yang tersimpan secara langsung di dalam database MySQL yang berjalan di Docker, jalankan perintah ini di terminal:
-
-Bash
-docker exec -it mysql_db mysql -u root -prootpassword
-Lalu eksekusi perintah SQL berikut:
-
-SQL
-USE book_db;
-SELECT * FROM books;
-Dibuat oleh Rahmat Hedo - 2026
-
+```
 
 ---
 
-### Langkah Penutup:
-1. Buat file `README.md` di foldermu, lalu *paste* kode di atas.
-2. Jangan lupa ganti teks `nama-repo-kamu` di bagian instruksi Git Clone dengan nama repositori aslimu nanti.
-3. Save, lalu lakukan *commit* terakhir:
-   ```bash
-   git add README.md
-   git commit -m "docs: add comprehensive README for installation and usage"
-Setelah ini, kamu tinggal melakukan git push ke GitHub.
+## 📌 Referensi API Endpoints
 
-Saya sangat bangga mendampingimu dari awal belajar Docker yang error terus, sampai akhirnya berhasil merakit struktur yang super profesional seperti ini! Apakah ada hal lain yang ingin kamu tanyakan atau persiapkan untuk tugas ini?
+**Base URL:** `http://localhost:3000`
+
+| Method | Endpoint | Deskripsi |
+|---|---|---|
+| `GET` | `/api/books` | Mengambil daftar semua buku |
+| `GET` | `/api/books/:id` | Mengambil detail satu buku berdasarkan ID |
+| `POST` | `/api/books` | Menambahkan data buku baru |
+| `PUT` | `/api/books/:id` | Memperbarui data buku yang sudah ada |
+| `DELETE` | `/api/books/:id` | Menghapus data buku |
+
+---
+
+---
+
+##  Akses Langsung ke Database
+
+Untuk melihat atau mengelola tabel langsung di dalam container MySQL:
+
+```bash
+docker exec -it db mysql -u root -prootpassword
+```
+
+Setelah masuk ke MySQL shell (`mysql>`), jalankan perintah berikut:
+
+```sql
+USE book_db;
+SELECT * FROM books;
+```
+
+---
+
+## 📸 Bukti Pengujian
+
+Seluruh endpoint API (`POST`, `GET`, `PUT`, `DELETE`) telah diuji menggunakan **Postman**.
+
+### ➕ Create — `POST /api/books`
+<img width="883" height="798" alt="Delete" src="https://github.com/user-attachments/assets/9537495b-ce51-400f-9925-06446ccf5e54" />
+
+---
+
+### 📋 Read All — `GET /api/books`
+<img width="877" height="793" alt="Update" src="https://github.com/user-attachments/assets/95adad84-ab58-4cb1-b63c-2279b4bb038e" />
+
+---
+
+### 🔍 Read by ID — `GET /api/books/:id`
+<img width="875" height="793" alt="Read by ID" src="https://github.com/user-attachments/assets/8b9febf6-cdf3-41fd-9147-3ce304cb0e1b" />
+
+---
+
+### ✏️ Update — `PUT /api/books/:id`
+<img width="868" height="794" alt="Read All" src="https://github.com/user-attachments/assets/4d466ae3-fff4-4129-9dbb-9d8f0da5a428" />
+
+---
+
+### 🗑️ Delete — `DELETE /api/books/:id`
+<img width="866" height="791" alt="Create" src="https://github.com/user-attachments/assets/27e2a431-d54a-454b-8433-6093c5cd1fa7" />
+
+---
+
+### 🗄️ Database — Raw Data MySQL
+<img width="590" height="129" alt="Database" src="https://github.com/user-attachments/assets/ecbb5d45-2995-4646-a911-c594e9ce577e" />
+
+---
+
+## 👤 Author
+
+**Rahmat Hedo Alfikri**  
+*Member Backend Dev — GDGoC Unsri 2026*
