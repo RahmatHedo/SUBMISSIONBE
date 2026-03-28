@@ -112,7 +112,7 @@ docker logs api_backend
 Untuk melihat atau mengelola tabel langsung di dalam container MySQL:
 
 ```bash
-docker exec -it db mysql -u root -prootpassword
+docker exec -it mysql_db mysql -u root -p
 ```
 
 Setelah masuk ke MySQL shell (`mysql>`), jalankan perintah berikut:
