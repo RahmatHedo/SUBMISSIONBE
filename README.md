@@ -25,7 +25,7 @@ Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi secara lokal di ko
 ### 1. Clone Repository
 Buka terminal Anda dan jalankan perintah berikut untuk mengunduh *source code*:
 ```bash
-git clone [https://github.com/RahmatHedo/nama-repo-kamu.git](https://github.com/RahmatHedo/nama-repo-kamu.git)
+git clone https://github.com/RahmatHedo/SUBMISSIONBE.git
 
 2. Konfigurasi Environment Variables
 Aplikasi ini membutuhkan variabel lingkungan (environment variables) untuk berjalan.
